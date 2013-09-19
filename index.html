@@ -1,0 +1,214 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>jQuery Waypoints</title>
+    <meta name="viewport" content="width=640">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono|Lato:400,700|PT+Serif:700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <div class="nav">
+      <h1>jQuery Waypoints</h1>
+      <p class="version">v2.0.3</p>
+      <ul>
+        <li><a class="nav-about" href="#about">About</a></li>
+        <li><a class="nav-started" href="#get-started">Get Started</a></li>
+        <li><a class="nav-shortcuts" href="#shortcuts-examples">Shortcuts &amp; Examples</a></li>
+      </ul>
+    </div>
+
+    <div id="about" class="panel about">
+      <div class="inner">
+        <div class="summary">
+          <p>Waypoints is a jQuery plugin that makes it easy to execute a function whenever you scroll to an element.</p>
+
+          <pre><code><span class="fn">$</span>(<span class="str">'.thing'</span>).<span class="fn">waypoint</span>(<span class="kw">function</span>(direction) {
+  <span class="fn">alert</span>(<span class="str">'Top of thing hit top of viewport.'</span>);
+});</code></pre>
+
+          <ul>
+            <li><a href="https://github.com/imakewebthings/jquery-waypoints/zipball/latest" class="icon about-download">Download</a></li>
+            <li><a href="http://github.com/imakewebthings/jquery-waypoints" class="icon about-github">GitHub</a></li>
+            <li><a href="test/" class="icon about-tests">Tests</a></li>
+            <li><a href="https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt" class="icon about-licenses">Licenses</a></li>
+          </ul>
+        </div>
+
+        <div class="new-in-2">
+          <h2>New in 2.0</h2>
+          <ul>
+            <li>
+              <h3 class="icon new-horizontals">Horizontals</h3>
+              <p>Waypoints can now be created for horizontal scrolling. Just pass <code>horizontal:true</code> to your waypoint options.</p>
+            </li>
+
+            <li>
+              <h3 class="icon new-multiples">Multiples</h3>
+              <p>One HTML element can now have multiple Waypoints attached to it, each with its own <code>offset</code> and handler.</p>
+            </li>
+
+            <li>
+              <h3 class="icon new-shortcuts">Shortcuts</h3>
+              <p>The most common uses for Waypoints are now even easier to implement with <a href="#shortcuts-examples">shortcut methods</a>.</p>
+            </li>
+
+            <li>
+              <h3 class="icon new-api">Revised API</h3>
+              <p>A new handler signature, added introspection methods, and more. Be sure to check the new <a href="#docs">docs</a> and the <a href="https://github.com/imakewebthings/jquery-waypoints/blob/master/CHANGELOG.md">changelog</a>.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div id="get-started" class="panel get-started">
+
+      <div class="inner">
+        <div class="started-section">
+          <p>First thing's first, to get started with Waypoints, <a href="https://github.com/imakewebthings/jquery-waypoints/zipball/latest">download the plugin</a> and include it after you've included jQuery.</p>
+
+          <pre><code>&lt;<span class="fn">script</span> <span class="kw">src</span>=<span class="str">&quot;/path/to/jquery.min.js&quot;</span>&gt;&lt;<span class="fn">/script</span>&gt;
+&lt;<span class="fn">script</span> <span class="kw">src</span>=<span class="str">&quot;/path/to/waypoints.min.js&quot;</span>&gt;&lt;<span class="fn">/script</span>&gt;</code></pre>
+
+          <p>You'll now have access to the <code>.waypoint</code> method on your jQuery objects.</p>
+        </div>
+
+        <div class="started-section">
+          <p>The simplest way to use Waypoints is to call <code>.waypoint</code> and pass in a function.</p>
+
+          <pre id="example-basic"><code><span class="fn">$</span>(<span class="str">'#example-basic'</span>).<span class="fn">waypoint</span>(<span class="kw">function</span>() {
+  <span class="fn">notify</span>(<span class="str">'Basic example callback triggered.'</span>);
+});</code></pre>
+
+          <p>This example causes a notification whenever the top of <code>#example-basic</code> hits the top of the viewport. The callback triggers when you pass this point both scrolling up and scrolling down.</p>
+        </div>
+
+        <div class="started-section">
+          <p>More often than not we want to perform different actions depending on which direction the user is scrolling. Waypoints passes this direction as a parameter to the callback function.</p>
+
+          <pre id="example-direction"><code><span class="fn">$</span>(<span class="str">'#example-direction'</span>).<span class="fn">waypoint</span>(<span class="kw">function</span>(direction) {
+  <span class="fn">notify</span>(<span class="str">'Direction example triggered scrolling '</span> + direction);
+});</code></pre>
+
+          <p>Here the notification reads "Direction example triggered scrolling down" or "Direction example triggered scrolling up".</p>
+        </div>
+
+        <div class="started-section">
+          <p>What if you want your waypoint to trigger in a location other than when the top of your element hits the top of the viewport? The <code>waypoint</code> function takes a second argument, an options object. One of the most useful options is <code>offset</code>, which tells Waypoints how far from the top of the window the callback should fire. This can be expressed in pixels&hellip;</p>
+
+          <pre id="example-offset-pixels"><code><span class="fn">$</span>(<span class="str">'#example-offset-pixels'</span>).<span class="fn">waypoint</span>(<span class="kw">function</span>() {
+  <span class="fn">notify</span>(<span class="str">'100 pixels from the top'</span>);
+}, { <span class="key">offset</span>: 100 });</code></pre>
+
+          <p>&hellip;as a percentage of the viewport's height&hellip;</p>
+
+          <pre id="example-offset-percent"><code><span class="fn">$</span>(<span class="str">'#example-offset-percent'</span>).<span class="fn">waypoint</span>(<span class="kw">function</span>() {
+  <span class="fn">notify</span>(<span class="str">'25% from the top'</span>);
+}, { <span class="key">offset</span>: <span class="str">'25%'</span> });</code></pre>
+
+          <p>&hellip;or as a function. The function needs to return a number. The following example will fire when the bottom of the element hits the top of the viewport.</p>
+
+          <pre id="example-offset-function"><code><span class="fn">$</span>(<span class="str">'#example-offset-function'</span>).<span class="fn">waypoint</span>(<span class="kw">function</span>() {
+  <span class="fn">notify</span>(<span class="str">'Element bottom hit window top'</span>);
+}, {
+  <span class="key">offset</span>: <span class="kw">function</span>() {
+    <span class="kw">return</span> -<span class="fn">$</span>(<span class="kw">this</span>).<span class="fn">height</span>();
+  }
+});</code></pre>
+        </div>
+
+        <div class="started-section">
+          <p>Let's say you have a <code>div</code> with <code>overflow:scroll</code>, and you want a waypoint inside of this scrollable element. The <code>context</code> option lets you do this. Scroll the box below.</p>
+
+          <div class="example-scroll-div">
+            <pre id="example-context"><code><span class="fn">$</span>(<span class="str">'#example-context'</span>).<span class="fn">waypoint</span>(<span class="kw">function</span>() {
+  <span class="fn">notify</span>(<span class="str">'Hit top of context'</span>);
+}, { <span class="key">context</span>: <span class="str">'.example-scroll-div'</span> });</code></pre>
+          </div>
+        </div>
+
+        <div class="started-section">
+          <p>Not all sites scroll vertically. You can create a waypoint on the horizontal axis with the <code>horizontal</code> option. This project page uses horizontal waypoints when the user navigates between high-level sections.</p>
+
+          <pre><code><span class="fn">$</span>(<span class="str">'.panel'</span>).<span class="fn">waypoint</span>(<span class="kw">function</span>(direction) {
+  $body.<span class="fn">toggleClass</span>(<span class="kw">this</span>.id + <span class="str">'-visible'</span>, direction === <span class="str">'right'</span>);
+}, {
+  <span class="key">offset</span>: <span class="str">'50%'</span>,
+  <span class="key">horizontal</span>: <span class="kw">true</span>
+});</code></pre>
+
+          <p>As you can see, when <code>horizontal</code> is set to true the <code>direction</code> passed to the callback changes from "down" and "up" to "right" and "left".</p>
+        </div>
+        
+        <div class="started-section">
+          <p>You can also create multiple waypoints on the same HTML element. Each waypoint can have its own options. The horizontal example above isn't the only waypoint created on the <code>.panel</code> elements.</p>
+
+          <pre><code><span class="fn">$</span>(<span class="str">'.panel'</span>).<span class="fn">waypoint</span>(<span class="kw">function</span>(direction) {
+  $body.<span class="fn">toggleClass</span>(<span class="kw">this</span>.id + <span class="str">'-visible'</span>, direction === <span class="str">'left'</span>);
+}, {
+  <span class="key">offset</span>: <span class="str">'-50%'</span>,
+  <span class="key">horizontal</span>: <span class="kw">true</span>
+});</code></pre>
+        </div>
+        
+        <div class="started-section">
+          <p>CoffeeScript authors may find passing a function followed by an options object to be a bit clumsy. There is another way to pass the waypoints callback, using the <code>handler</code> option. If you provide a <code>handler</code> option, you only need to pass the options object.</p>
+
+          <pre id="example-handler"><code><span class="cm">/* In JavaScript */</span>
+<span class="fn">$</span>(<span class="str">'#example-handler'</span>).<span class="fn">waypoint</span>({
+  <span class="key">handler</span>: <span class="kw">function</span>() {
+    <span class="fn">notify</span>(<span class="str">'Handler option used'</span>);
+  },
+  <span class="key">offset</span>: <span class="str">'50%'</span>
+});
+
+<span class="cm"># In CoffeeScript</span>
+<span class="fn">$</span>(<span class="str">'#example-handler'</span>).<span class="fn">waypoint</span>
+  <span class="key">handler</span>: <span class="kw">-></span>
+    <span class="fn">notify</span> <span class="str">'Handler option used'</span>
+  <span class="key">offset</span>: <span class="str">'50%'</span></code></pre>
+        </div>
+
+
+
+
+
+        <div class="started-section">
+          <p>If you've got these basics under control, take a look at the <a href="#docs">docs</a> for more information on all of the options and methods available in Waypoints.</p>
+
+          <p>If you're looking to implement one of a number of common scroll-based UI patterns, give the <a href="#shortcuts-examples">shortcuts</a> section a try.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="shortcuts-examples" class="panel shortcuts-examples">
+      <div class="inner">
+        <div class="shortcuts">
+          <h2>Shortcuts</h2>
+          <p>jQuery Waypoints extensions that simplify some common UI patterns.</p>
+          <a href="shortcuts/sticky-elements" class="icon shortcut-sticky">Sticky Elements</a>
+          <a href="shortcuts/infinite-scroll" class="icon shortcut-infinite">Infinite Scroll</a>
+        </div>
+
+        <div class="examples">
+          <h2>Examples</h2>
+          <p>Other custom uses of Waypoints.</p>
+          <a href="examples/dial-controls" class="icon example-dials">Dial Controls</a>
+          <a href="examples/scroll-analytics" class="icon example-analytics">Scroll Analytics</a>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+    <script src="jquery.js"></script>
+    <script src="index-reverseENG.js"></script>
+  </body>
+</html>
